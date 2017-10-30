@@ -1,12 +1,12 @@
 console.log('App.js is running!')
 
-var app = {
+const app = {
   title: 'Indecision App',
   subtitle: 'Put your life in the hands of a computer'
 };
 
 // JSX - Javascript XML
-var template = 
+const template = 
   (<div>
     <h1>{app.title}</h1>
     <p>{app.subtitle}</p>
@@ -17,7 +17,7 @@ var template =
   </div>
   );
 
-var user = {
+const user = {
   name: 'Luis Locon',
   age: 24,
   location: 'Guatemala'
@@ -29,8 +29,8 @@ function getLocation(location) {
   }
 }
 
-// Create a templateTwo var JSX EXPRESSION
-var templateTwo = (
+// Create a templateTwo const JSX EXPRESSION
+const templateTwo = (
   <div>
     <h1>{user.name ? user.name : 'Anonymous'}</h1> {/*Operador ternario IF STATMENT*/}
     {(user.name && user.age >= 18) && <p>Age: {user.age}</p>} {/*Rigth value is used when is true*/}
@@ -38,7 +38,7 @@ var templateTwo = (
   </div>
 );
 
-var appRoot = document.getElementById('app')
+const appRoot = document.getElementById('app')
 
 
 ReactDOM.render(templateTwo, appRoot)

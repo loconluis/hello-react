@@ -1,5 +1,3 @@
-'use strict';
-
 // const square = function (x) {
 //   return x * x;
 // }
@@ -15,23 +13,21 @@
 //   return a + b
 // }
 // console.log(add(33, 1, 2, 5, 1))
-var add = function add(a, b) {
+const add = (a, b) => {
   // console.log(arguments) //undefined arguments with arrow function
-  return a + b;
-};
-console.log(add(33, 1, 1001));
+  return a + b
+}
+console.log(add(33, 1, 1001))
+
 
 // this keyword - no longer bound
 
-var user = {
+const user = {
   name: 'Luis',
   cities: ['Guatemala', 'Xela', 'Zacapa', 'Rehutauleu'],
-  printPlacesLived: function printPlacesLived() {
-    var _this = this;
+  printPlacesLived() {
+    return this.cities.map((city) => this.name + ' has lived in ' + city);
 
-    return this.cities.map(function (city) {
-      return _this.name + ' has lived in ' + city;
-    });
 
     // this.cities.forEach(city => {
     //   console.log(this.name + ' has lived in ' + city)
@@ -39,17 +35,13 @@ var user = {
   }
 };
 
-var multiplier = {
+const multiplier = {
   numbers: [10, 20, 30],
   multiplyBy: 4,
-  multiply: function multiply() {
-    var _this2 = this;
-
-    return this.numbers.map(function (num) {
-      return num * _this2.multiplyBy;
-    });
+  multiply() {
+    return this.numbers.map(num => num * this.multiplyBy)
   }
-};
+}
 
-console.log(user.printPlacesLived());
-console.log(multiplier.multiply());
+console.log(user.printPlacesLived())
+console.log(multiplier.multiply())
