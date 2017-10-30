@@ -23,6 +23,13 @@ const clearOptions = () => {
   render()
 }
 
+const selectOne = () => {
+  const random = Math.floor(Math.random() * app.options.length);
+  const option = app.options[random]
+  console.log(option);
+  alert(option)
+}
+
 // JSX - Javascript XML
 
 
@@ -38,9 +45,10 @@ const render = () => {
         {app.options.length > 0 ? app.options.map((option, index) => <li key={index}>{option}</li>) : ""}
       </ol>
       <form onSubmit={onFormSubmit}>
-        <input type="text" name="option" />
+        <input type="text" name="option" placeholder="Wirte an option..." />
         <button>Add option</button>
       </form>
+      <button disabled={app.options.length === 0} onClick={selectOne}>What should  I do?</button>
       <button onClick={clearOptions}>Clear</button>
     </div>
   );

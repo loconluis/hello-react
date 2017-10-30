@@ -25,6 +25,13 @@ var clearOptions = function clearOptions() {
   render();
 };
 
+var selectOne = function selectOne() {
+  var random = Math.floor(Math.random() * app.options.length);
+  var option = app.options[random];
+  console.log(option);
+  alert(option);
+};
+
 // JSX - Javascript XML
 
 
@@ -63,12 +70,17 @@ var render = function render() {
     React.createElement(
       'form',
       { onSubmit: onFormSubmit },
-      React.createElement('input', { type: 'text', name: 'option' }),
+      React.createElement('input', { type: 'text', name: 'option', placeholder: 'Wirte an option...' }),
       React.createElement(
         'button',
         null,
         'Add option'
       )
+    ),
+    React.createElement(
+      'button',
+      { disabled: app.options.length === 0, onClick: selectOne },
+      'What should  I do?'
     ),
     React.createElement(
       'button',
