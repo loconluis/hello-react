@@ -14,7 +14,7 @@ class IndecisionApp extends React.Component {
   };
 
   handleDeleteOptions() {
-    this.setState(() => ({ options: [] }));
+    this.setState(() => ({ options: props.options }));
   };
 
   handleAddOption(option) {
@@ -57,55 +57,56 @@ class IndecisionApp extends React.Component {
   }
 }
 
-class Header extends React.Component {
-  render() {
-    return (
-      <div>
-        <h1>{this.props.title}</h1>
-        <h2>{this.props.subtitle}</h2>
-      </div>
-    );
-  }
+IndecisionApp.defaultProps = {
+  options: [],
+}
+// This could be an stateless component || pure functions
+const Header = (props) => {
+  return (
+    <div>
+      <h1>{props.title}</h1>
+      <h2>{props.subtitle}</h2>
+    </div>
+  );
+}
+Header.defaultProps = {
+  title: 'Some default!'
 }
 
-class Action extends React.Component {
-  render() {
-    return (
-      <div>
-        <button
-          onClick={this.props.handlePick}
-          disabled={!this.props.hasOptions}
-        >
-          What should I do?
-        </button>
-      </div>
-    )
-  }
+// This could be an stateless component
+const Action = (props) => {
+  return (
+    <div>
+      <button
+        onClick={props.handlePick}
+        disabled={!props.hasOptions}
+      >
+        What should I do?
+      </button>
+    </div>
+  )
 }
-
-class Options extends React.Component {
-  render() {
-    return (
-      <div>
-        <button onClick={ this.props.handleDeleteOptions }>Remove All</button>
-        <ol>
-        {
-          this.props.options.length !== 0 ? this.props.options.map((option, index) => <Option key={index} text={option} />) : ''
-        }
-        </ol>
-      </div>
-    )
-  }
+// This could be an stateless component
+const Options = (props) => {
+  return (
+    <div>
+      <button onClick={ props.handleDeleteOptions }>Remove All</button>
+      <ol>
+      {
+        props.options.length !== 0 ? props.options.map((option, index) => <Option key={index} text={option} />) : ''
+      }
+      </ol>
+    </div>
+  )
 }
-
-class Option extends React.Component {
-  render () {
-    return (
-      <li>
-        {this.props.text}
-      </li>
-    )
-  }
+// This could be an stateless component
+const Option = (props) => {
+  return (
+    <li>
+      {props.text}
+    </li>
+  )
+  
 }
 
 class AddOption extends React.Component {
@@ -141,5 +142,14 @@ class AddOption extends React.Component {
     )
   }
 }
+
+// const User = (props) => {
+//   return (
+//     <div>
+//       <p>Name: {props.name} </p>
+//       <p>Age: {props.age}</p>
+//     </div>
+//   )
+// }
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
