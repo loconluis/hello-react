@@ -1,59 +1,77 @@
-console.log('App.js is running!')
+class IndecisionApp extends React.Component {
+  render() {
+    const title = 'Indecision';
+    const subtitle = 'Put your life in the hands of a computer';
+    const options = ['One', 'Two', 'Three'];
 
-const app = {
-  title: 'Indecision App',
-  subtitle: 'Put your life in the hands of a computer',
-  options: []
-};
-
-const onFormSubmit = (e) => {
-  e.preventDefault();
-  const option = e.target.elements.option.value;
-
-  if (option) {
-    app.options.push(option)
-    e.target.elements.option.value = "";
-
-    render()
+    return (
+      <div>
+        <Header title={title} subtitle={subtitle}/>
+        <Action />
+        <Options options={options}/>
+        <AddOption />
+      </div>
+    );
   }
 }
 
-const clearOptions = () => {
-  app.options.length = 0;
-  render()
+class Header extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.title}</h1>
+        <h2>{this.props.subtitle}</h2>
+      </div>
+    );
+  }
 }
 
-const selectOne = () => {
-  const random = Math.floor(Math.random() * app.options.length);
-  const option = app.options[random]
-  console.log(option);
-  alert(option)
+class Action extends React.Component {
+  render() {
+    return (
+      <div>
+        <button>What should I do?</button>
+      </div>
+    )
+  }
 }
 
-// JSX - Javascript XML
-
-
-const appRoot = document.getElementById('app');
-
-const render = () => {
-  const template = (
-    <div>
-      <h1>{app.title}</h1>
-      {app.subtitle && <p>{app.subtitle}</p>}
-      <p>{app.options.length > 0 ? 'Here are your options' : 'No options'}</p>
-      <ol>
-        {app.options.length > 0 ? app.options.map((option, index) => <li key={index}>{option}</li>) : ""}
-      </ol>
-      <form onSubmit={onFormSubmit}>
-        <input type="text" name="option" placeholder="Wirte an option..." />
-        <button>Add option</button>
-      </form>
-      <button disabled={app.options.length === 0} onClick={selectOne}>What should  I do?</button>
-      <button onClick={clearOptions}>Clear</button>
-    </div>
-  );
-
-  ReactDOM.render(template, appRoot);
+class Options extends React.Component {
+  render() {
+    console.log(this.props)
+    return (
+      <div>
+        <ol>
+        {
+          this.props.options.length !== 0 ? this.props.options.map((option, index) => <Option key={index} text={option} />) : ''
+        }
+        </ol>
+      </div>
+    )
+  }
 }
 
-render();
+class Option extends React.Component {
+  render () {
+    return (
+      <li>
+        {this.props.text}
+      </li>
+    )
+  }
+}
+
+class AddOption extends React.Component {
+  render() {
+    return (
+      <div>
+        <form>
+          <input type="text" placeholder="Write an option here..." />
+          <button>Add</button>
+        </form>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'))
