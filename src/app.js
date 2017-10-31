@@ -5,7 +5,7 @@ class IndecisionApp extends React.Component {
     this.state = {
       title : 'Indecision',
       subtitle: 'Put your life in the hands of a computer',
-      options: props.options,
+      options: [],
     }
 
     this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
@@ -15,11 +15,24 @@ class IndecisionApp extends React.Component {
   };
 
   componentDidMount () {
-    console.log('Component did mount!')
+    try {
+      const json = localStorage.getItem('options');
+      const options = JSON.parse(json);
+  
+      if(options) {
+        this.setState(() => ({ options }))
+      }
+    } catch (e) {
+      // Do nothing at all
+    }
   };
   
   componentDidUpdate (prevProps, prevState) {
-    console.log('componentDidUpdate')
+
+    if(prevState.options.length !== this.state.options.length) {
+      const json = JSON.stringify(this.state.options);
+      localStorage.setItem('options', json);
+    }
   };
   
   componentWillUnmount() {
@@ -78,9 +91,6 @@ class IndecisionApp extends React.Component {
   }
 }
 
-IndecisionApp.defaultProps = {
-  options: [],
-}
 // This could be an stateless component || pure functions
 const Header = (props) => {
   return (
@@ -112,7 +122,7 @@ const Options = (props) => {
   return (
     <div>
       <button onClick={props.handleDeleteOptions}>Remove All</button>
-      <ol>
+      {props.options.length === 0 && <p>Please add an option to get started!</p>}
       {
         props.options.map((option, index) => 
           (
@@ -124,14 +134,13 @@ const Options = (props) => {
           )
         )
       }
-      </ol>
     </div>
   )
 }
 // This could be an stateless component
 const Option = (props) => {
   return (
-    <li>
+    <div>
       {props.text}
       <button
         onClick={(e) => {
@@ -140,7 +149,7 @@ const Option = (props) => {
       >
         Remove
       </button>
-    </li>
+    </div>
   )
   
 }
@@ -161,8 +170,9 @@ class AddOption extends React.Component {
     const option = e.target.elements.option.value.trim();
     const error = this.props.handleAddOption(option);
     this.setState(() => ({ error }))
-
-    e.target.elements.option.value = "";
+    if(!error) {
+      e.target.elements.option.value = "";
+    }
   }
 
   render() {
